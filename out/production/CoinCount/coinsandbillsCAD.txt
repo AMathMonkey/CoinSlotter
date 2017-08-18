@@ -1,0 +1,10 @@
+0.05 true
+0.10 true
+0.25 true
+1.00 true
+2.00 true
+5.00 false
+10.00 false
+20.00 false
+50.00 false
+100.00 false
