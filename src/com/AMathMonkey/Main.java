@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
-	// write your code here
+
         Deque<CoinSlot> coinSlots = new ArrayDeque<>();
         Scanner sc = new Scanner(System.in);
         File file;
@@ -18,20 +18,20 @@ public class Main {
         System.out.println("Choose from the list of supported countries:");
         {
             int i = 1;
-            for (MoneyTools.Countries c : MoneyTools.Countries.values()) {
+            for (MoneyTools.Country c : MoneyTools.Country.values()) {
                 System.out.println(i++ + ")\t" + c);
             }
         }
-        MoneyTools.Countries country = MoneyTools.Countries.values()[sc.nextInt()-1] ;
+        MoneyTools.Country country = MoneyTools.Country.values()[sc.nextInt()-1] ;
 
         System.out.println("Choose the type of currency you want to count:");
         {
             int i = 1;
-            for (MoneyTools.CoinsBillsOrBoth c : MoneyTools.CoinsBillsOrBoth.values()) {
+            for (MoneyTools.CBB c : MoneyTools.CBB.values()) {
                 System.out.println(i++ + ")\t" + c);
             }
         }
-        MoneyTools.CoinsBillsOrBoth cbb =  MoneyTools.CoinsBillsOrBoth.values()[sc.nextInt()-1];
+        MoneyTools.CBB cbb =  MoneyTools.CBB.values()[sc.nextInt()-1];
 
 
 

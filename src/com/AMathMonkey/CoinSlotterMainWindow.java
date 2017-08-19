@@ -29,8 +29,8 @@ public class CoinSlotterMainWindow extends Application {
     }
 
     private boolean justOnce = false;
-    private MoneyTools.Countries c = MoneyTools.globalCountry;
-    private MoneyTools.CoinsBillsOrBoth cbb = MoneyTools.globalCBB;
+    private MoneyTools.Country c = MoneyTools.globalCountry;
+    private MoneyTools.CBB cbb = MoneyTools.globalCBB;
     @FXML private Pane mainPane = new Pane();
     @FXML private Label total = new Label("$0.00");
     private Stage s = MoneyTools.globalStage;
