@@ -1,7 +1,5 @@
 package com.AMathMonkey;
 
-import javafx.stage.Stage;
-
 import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.TreeMap;
@@ -65,7 +63,8 @@ class MoneyTools {
 
     static Country globalCountry;
     static CBB globalCBB;
-    static Stage globalStage;
+    static String globalCountryString;
+    static String globalCBBString;
 
     static DecimalFormat df = new DecimalFormat("#0.00");
 }

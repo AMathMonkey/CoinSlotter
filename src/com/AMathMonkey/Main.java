@@ -39,29 +39,29 @@ public class Main {
             case CANADA:
                 switch (cbb) {
                     case BILLS:
-                        file = new File("src/billsCAD.txt");
+                        file = new File("src/CADb.txt");
                         break;
                     case COINS:
-                        file = new File("src/coinsCAD.txt");
+                        file = new File("src/CADc.txt");
                         break;
                     default:
-                        file = new File("src/coinsandbillsCAD.txt");
+                        file = new File("src/CADcb.txt");
                 }
                 break;
             case SINGAPORE:
                 switch(cbb){
                     case BILLS:
-                        file = new File("src/billsSGD.txt");
+                        file = new File("src/SGDb.txt");
                         break;
                     case COINS:
-                        file = new File("src/coinsSGD.txt");
+                        file = new File("src/SGDc.txt");
                         break;
                     default:
-                        file = new File("src/coinsandbillsSGD.txt");
+                        file = new File("src/SGDcb.txt");
                 }
                 break;
             default:
-                file = new File("src/coinsSGD.txt");
+                file = new File("src/SGDc.txt");
         }
 
         Scanner fileSc = new Scanner(file);

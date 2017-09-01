@@ -53,6 +53,8 @@ public class FirstWindowController implements Initializable{
 
             MoneyTools.globalCountry = countryMap.get(selectedCountry.toString());
             MoneyTools.globalCBB = cbbMap.get(selectedCBB.toString());
+            MoneyTools.globalCountryString = selectedCountry.toString();
+            MoneyTools.globalCBBString = selectedCBB.toString();
 
             MainWindow mainWindow = new MainWindow();
             mainWindow.start(stage);
