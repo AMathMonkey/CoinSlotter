@@ -211,6 +211,4 @@ public class MainWindow extends Application {
         stage.show();
     }
 
-
-
 }

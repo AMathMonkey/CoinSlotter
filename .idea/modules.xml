@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CoinCount.iml" filepath="$PROJECT_DIR$/CoinCount.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CoinSlotter.iml" filepath="$PROJECT_DIR$/CoinSlotter.iml" />
     </modules>
   </component>
 </project>
