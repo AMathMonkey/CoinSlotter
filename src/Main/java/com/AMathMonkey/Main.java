@@ -1,4 +1,4 @@
-package com.AMathMonkey;
+package Main.java.com.AMathMonkey;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -89,8 +89,6 @@ public class Main {
         }
         for(int i = 0; i < coinSlots.size(); i++){
             CoinSlot current = coinSlots.removeFirst();
-            double currentValue = current.getValue();
-            int currentNumCoins = current.getNumCoins();
             total += current.getTotal();
             coinSlots.addLast(current);
         }

@@ -1,4 +1,4 @@
-package com.AMathMonkey;
+package Main.java.com.AMathMonkey;
 
 public class CoinSlot {
     private double value;

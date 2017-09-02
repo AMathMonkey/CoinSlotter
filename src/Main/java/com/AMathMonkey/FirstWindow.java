@@ -1,4 +1,4 @@
-package com.AMathMonkey;
+package Main.java.com.AMathMonkey;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,12 +17,9 @@ public class FirstWindow extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("FirstWindow.fxml"));
-
-
         primaryStage.setTitle("Welcome to CoinSlotter");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-
     }
 
 

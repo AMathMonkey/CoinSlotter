@@ -1,8 +1,6 @@
-package com.AMathMonkey;
+package Main.java.com.AMathMonkey;
 
 import javafx.application.Application;
-import javafx.fxml.FXML;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,15 +11,14 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static com.AMathMonkey.MoneyTools.globalCBBString;
-import static com.AMathMonkey.MoneyTools.globalCountryString;
+import static Main.java.com.AMathMonkey.MoneyTools.globalCBBString;
+import static Main.java.com.AMathMonkey.MoneyTools.globalCountryString;
 
 public class MainWindow extends Application {
 
@@ -29,18 +26,13 @@ public class MainWindow extends Application {
         launch(args);
     }
 
-    @FXML
-    private Pane mainPane;
-
-    @FXML
-    private Label total;
 
     private MoneyTools.Country c = MoneyTools.globalCountry;
     private MoneyTools.CBB cbb = MoneyTools.globalCBB;
 
 
-    private int search(List<Button> arr, Object find){
-        for(int i = 0; i < arr.size(); i++){
+    private int search(List<Button> arr, Object find) {
+        for (int i = 0; i < arr.size(); i++) {
             if (arr.get(i).equals(find)) return i;
         }
         return -1;
@@ -48,56 +40,60 @@ public class MainWindow extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        //Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
 
-
-        mainPane = new Pane();
-        Parent root = mainPane;
-        total = new Label("$0.00");
-        mainPane.setBackground(new Background(new BackgroundImage(new Image("lol.png"),
+        Pane mainPane = new Pane();
+        Label total = new Label("$0.00");
+        mainPane.setBackground(new Background(new BackgroundImage(new Image("Main/resources/Background.png"),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 
         List<CoinSlot> coinSlots = new ArrayList<>();
-        File file;
+        InputStream file;
+        InputStream file2forCB = null;
         switch (c) {
             case CANADA:
                 switch (cbb) {
                     case BILLS:
-                        file = new File("src/CADb.txt");
+                        file = ClassLoader.getSystemResourceAsStream("Main/resources/CADb.txt");
                         break;
                     case COINS:
-                        file = new File("src/CADc.txt");
+                        file = ClassLoader.getSystemResourceAsStream("Main/resources/CADc.txt");
                         break;
                     default:
-                        file = new File("src/CADcb.txt");
+                        file = ClassLoader.getSystemResourceAsStream("Main/resources/CADc.txt");
+                        file2forCB = ClassLoader.getSystemResourceAsStream("Main/resources/CADb.txt");
                 }
                 break;
             case SINGAPORE:
                 switch (cbb) {
                     case BILLS:
-                        file = new File("src/SGDb.txt");
+                        file = ClassLoader.getSystemResourceAsStream("Main/resources/SGDb.txt");
                         break;
                     case COINS:
-                        file = new File("src/SGDc.txt");
+                        file = ClassLoader.getSystemResourceAsStream("Main/resources/SGDc.txt");
                         break;
                     default:
-                        file = new File("src/SGDcb.txt");
+                        file = ClassLoader.getSystemResourceAsStream("Main/resources/SGDc.txt");
+                        file2forCB = ClassLoader.getSystemResourceAsStream("Main/resources/SGDb.txt");
                 }
                 break;
             default:
-                file = new File("src/SGDc.txt");
+                file = ClassLoader.getSystemResourceAsStream("Main/resources/SGDc.txt");
         }
 
-        Scanner fileSc = null;
-        try {
-            fileSc = new Scanner(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+
+        Scanner fileSc = new Scanner(file);
+
 
         while (fileSc.hasNext()) {
             String[] line = fileSc.nextLine().split(" ");
             coinSlots.add(new CoinSlot(Double.parseDouble(line[0]), Boolean.parseBoolean(line[1])));
+        }
+        if(file2forCB != null){
+            fileSc = new Scanner(file2forCB);
+            while (fileSc.hasNext()) {
+                String[] line = fileSc.nextLine().split(" ");
+                coinSlots.add(new CoinSlot(Double.parseDouble(line[0]), Boolean.parseBoolean(line[1])));
+            }
         }
 
         int numOfRows = coinSlots.size();
@@ -109,15 +105,14 @@ public class MainWindow extends Application {
         List<Label> totalLabels = new ArrayList<>();
 
         for (CoinSlot coinSlot : coinSlots) {
-            if(coinSlot.isCoin()){
-                if(coinSlot.getValue() < 1) {
+            if (coinSlot.isCoin()) {
+                if (coinSlot.getValue() < 1) {
                     valueLabels.add(new Label(Integer.toString((int) (coinSlot.getValue() * 100)) + "¢ coins"));
-                }
-                else {
+                } else {
                     valueLabels.add(new Label("$" + Integer.toString((int) coinSlot.getValue()) + " coins"));
                 }
-            }else{
-                valueLabels.add(new Label("$"+ Integer.toString((int)coinSlot.getValue()) +  " bills"));
+            } else {
+                valueLabels.add(new Label("$" + Integer.toString((int) coinSlot.getValue()) + " bills"));
             }
 
             textFields.add(new TextField());
@@ -129,7 +124,7 @@ public class MainWindow extends Application {
 
         for (int i = 0; i < valueLabels.size(); i++) {
             //Makes labels for different coin values
-            valueLabels.get(i).relocate(25, j+5);
+            valueLabels.get(i).relocate(25, j + 5);
             valueLabels.get(i).setTextFill(Paint.valueOf("white"));
             mainPane.getChildren().add(valueLabels.get(i));
 
@@ -137,17 +132,17 @@ public class MainWindow extends Application {
             textFields.get(i).relocate(150, j);
             textFields.get(i).setOnKeyReleased(event12 -> {
                 double tempTotal = 0;
-                for(int i2 = 0; i2 < coinSlots.size(); i2++){
-                    if(MoneyTools.isNumeric(textFields.get(i2).getText())){
+                for (int i2 = 0; i2 < coinSlots.size(); i2++) {
+                    if (MoneyTools.isNumeric(textFields.get(i2).getText())) {
                         coinSlots.get(i2).setNumCoins(Integer.parseInt(textFields.get(i2).getText()));
-                        totalLabels.get(i2).setText("$"+MoneyTools.df.format(coinSlots.get(i2).getTotal()));
-                    }else if(textFields.get(i2).getText().equals("")){
+                        totalLabels.get(i2).setText("$" + MoneyTools.df.format(coinSlots.get(i2).getTotal()));
+                    } else if (textFields.get(i2).getText().equals("")) {
                         coinSlots.get(i2).setNumCoins(0);
-                        totalLabels.get(i2).setText("$"+MoneyTools.df.format(coinSlots.get(i2).getTotal()));
+                        totalLabels.get(i2).setText("$" + MoneyTools.df.format(coinSlots.get(i2).getTotal()));
                     }
                     tempTotal += coinSlots.get(i2).getTotal();
                 }
-                total.setText("$"+MoneyTools.df.format(tempTotal));
+                total.setText("$" + MoneyTools.df.format(tempTotal));
             });
             mainPane.getChildren().add(textFields.get(i));
 
@@ -157,19 +152,18 @@ public class MainWindow extends Application {
             plusButtons.get(i).setOnAction(event1 -> {
                 int i1 = search(plusButtons, event1.getSource());
                 String tempText = textFields.get(i1).getText();
-                if(MoneyTools.isNumeric(tempText)) {
+                if (MoneyTools.isNumeric(tempText)) {
                     coinSlots.get(i1).addCoin();
                     total.setText("$" + MoneyTools.df.format(Double.parseDouble(total.getText().replaceAll("(?<=\\d),(?=\\d)|\\$", ""))
                             + coinSlots.get(i1).getValue()));
                     totalLabels.get(i1).setText("$" + MoneyTools.df.format(coinSlots.get(i1).getTotal()));
                     textFields.get(i1).setText(Integer.toString(coinSlots.get(i1).getNumCoins()));
-                }
-                else if(tempText.equals("")){
+                } else if (tempText.equals("")) {
                     textFields.get(i1).setText("1");
                     coinSlots.get(i1).addCoin();
-                    totalLabels.get(i1).setText("$"+MoneyTools.df.format(coinSlots.get(i1).getTotal()));
-                    total.setText("$"+MoneyTools.df.format(Double.parseDouble(total.getText().replaceAll("(?<=\\d),(?=\\d)|\\$", ""))
-                            +(coinSlots.get(i1).getTotal())));
+                    totalLabels.get(i1).setText("$" + MoneyTools.df.format(coinSlots.get(i1).getTotal()));
+                    total.setText("$" + MoneyTools.df.format(Double.parseDouble(total.getText().replaceAll("(?<=\\d),(?=\\d)|\\$", ""))
+                            + (coinSlots.get(i1).getTotal())));
                 }
             });
             mainPane.getChildren().add(plusButtons.get(i));
@@ -179,32 +173,32 @@ public class MainWindow extends Application {
             minusButtons.get(i).setOnAction(event1 -> {
                 int i3 = search(minusButtons, event1.getSource());
                 String tempText = textFields.get(i3).getText();
-                if(MoneyTools.isNumeric(tempText) && Integer.parseInt(tempText) > 0){
+                if (MoneyTools.isNumeric(tempText) && Integer.parseInt(tempText) > 0) {
                     coinSlots.get(i3).removeCoin();
-                    total.setText("$"+MoneyTools.df.format(Double.parseDouble(total.getText().replaceAll("(?<=\\d),(?=\\d)|\\$", ""))
+                    total.setText("$" + MoneyTools.df.format(Double.parseDouble(total.getText().replaceAll("(?<=\\d),(?=\\d)|\\$", ""))
                             - coinSlots.get(i3).getValue()));
-                    totalLabels.get(i3).setText("$"+MoneyTools.df.format(coinSlots.get(i3).getTotal()));
+                    totalLabels.get(i3).setText("$" + MoneyTools.df.format(coinSlots.get(i3).getTotal()));
                     textFields.get(i3).setText(Integer.toString(coinSlots.get(i3).getNumCoins()));
-                }else{
+                } else {
                     textFields.get(i3).setText("0");
                 }
             });
             mainPane.getChildren().add(minusButtons.get(i));
 
-            totalLabels.get(i).relocate(400, j+5);
+            totalLabels.get(i).relocate(400, j + 5);
             totalLabels.get(i).setTextFill(Paint.valueOf("white"));
-            totalLabels.get(i).setText("$"+MoneyTools.df.format(coinSlots.get(i).getTotal()));
+            totalLabels.get(i).setText("$" + MoneyTools.df.format(coinSlots.get(i).getTotal()));
 
             mainPane.getChildren().add(totalLabels.get(i));
 
             j += 40;
         }
-        total.relocate(200, j+30);
+        total.relocate(200, j + 30);
         total.setFont(Font.font(30));
         total.setTextFill(Paint.valueOf("white"));
         mainPane.getChildren().add(total);
 
-        Scene scene = new Scene(mainPane,500,numOfRows*40+100);
+        Scene scene = new Scene(mainPane, 500, numOfRows * 40 + 100);
         stage = new Stage();
         stage.setTitle("CoinSlotter - " + globalCountryString + " - " + globalCBBString);
         stage.setScene(scene);

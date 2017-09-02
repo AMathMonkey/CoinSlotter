@@ -1,7 +1,6 @@
-package com.AMathMonkey;
+package Main.java.com.AMathMonkey;
 
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -17,14 +16,14 @@ import java.util.ResourceBundle;
 public class FirstWindowController implements Initializable{
 
     @FXML
-    private ComboBox countryBox;
+    private ComboBox<String> countryBox;
     @FXML
-    private ComboBox cbbBox;
+    private ComboBox<String> cbbBox;
     @FXML
     private AnchorPane anchor;
 
-    Map<String, MoneyTools.Country> countryMap = MoneyTools.countryMap();
-    Map<String, MoneyTools.CBB> cbbMap = MoneyTools.cbbMap();
+    private Map<String, MoneyTools.Country> countryMap = MoneyTools.countryMap();
+    private Map<String, MoneyTools.CBB> cbbMap = MoneyTools.cbbMap();
 
     public FirstWindowController(){
 
@@ -35,7 +34,7 @@ public class FirstWindowController implements Initializable{
 
         BackgroundSize bgs = new BackgroundSize(400, 300, false, false,
                 false, false);
-        anchor.setBackground(new Background(new BackgroundImage(new Image("lol.png"),
+        anchor.setBackground(new Background(new BackgroundImage(new Image("Main/resources/Background.png"),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, bgs)));
 
         countryBox.setItems(FXCollections.observableArrayList(countryMap.keySet()));
@@ -44,7 +43,7 @@ public class FirstWindowController implements Initializable{
 
 
     @FXML
-    protected void handleDoneButtonAction(ActionEvent event) throws IOException {
+    protected void handleDoneButtonAction() throws IOException {
         Object selectedCountry = countryBox.getSelectionModel().getSelectedItem();
         Object selectedCBB = cbbBox.getSelectionModel().getSelectedItem();
         if (selectedCountry != null && selectedCBB != null) {

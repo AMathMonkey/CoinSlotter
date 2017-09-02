@@ -1,4 +1,4 @@
-package com.AMathMonkey;
+package Main.java.com.AMathMonkey;
 
 import java.text.DecimalFormat;
 import java.util.Map;
@@ -17,7 +17,7 @@ class MoneyTools {
      */
     public enum Country {
 
-        CANADA, SINGAPORE;
+        CANADA, SINGAPORE
     }
     static Map<String, Country> countryMap(){
         Map<String, Country> countryMap = new TreeMap<>();
@@ -32,7 +32,7 @@ class MoneyTools {
      * In V1 of this program, it was called CoinsBillsOrBoth, thus CBB
      */
     public enum CBB {
-        COINS, BILLS, COINS_AND_BILLS;
+        COINS, BILLS, COINS_AND_BILLS
 
     }
     static Map<String, CBB> cbbMap(){
@@ -44,7 +44,7 @@ class MoneyTools {
         return currencyMap;
     }
 
-    public static boolean isNumeric(String str)
+    static boolean isNumeric(String str)
     {
         try
         {
